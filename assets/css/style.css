@@ -1,0 +1,1227 @@
+/* =============================================================== */
+/* SPIS TREŚCI                                                     */
+/* =============================================================== */
+/* 
+1. ZMIENNE I RESET - kolory, podstawowe style i reset
+2. OGÓLNE STYLE - ciało, linki, listy, przyciski
+3. HEADER - nagłówek strony i nawigacja
+4. HERO - sekcja powitalna
+5. SEKCJE - ogólne style sekcji
+6. SERVICES - sekcja usług
+7. PORTFOLIO - galeria realizacji
+8. TESTIMONIALS - opinie klientów
+9. PARTNERS - sekcja partnerów
+10. CONTACT - formularz kontaktowy
+11. FOOTER - stopka strony
+12. DODATKOWE ELEMENTY - przyciski, lightbox
+13. ANIMACJE - keyframes i efekty
+14. MEDIA QUERIES - responsywność
+*/
+
+/* =============================================================== */
+/* 1. ZMIENNE I RESET - kolory, podstawowe style i reset           */
+/* =============================================================== */
+:root {
+	--primary-color: #1fe0e0;
+	--secondary-color: #ff883e;
+	--accent-color: #00bfff;
+	--light-color: #f8f9fa;
+	--dark-color: #333;
+	--text-color: #444;
+	--transition: all 0.3s ease;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* =============================================================== */
+/* 2. OGÓLNE STYLE - ciało, linki, listy, przyciski                */
+/* =============================================================== */
+body {
+	font-family: 'Montserrat', sans-serif;
+	line-height: 1.6;
+	color: var(--text-color);
+	background-color: var(--light-color);
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+ul {
+	list-style: none;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.btn {
+	display: inline-block;
+	background-color: var(--primary-color);
+	color: white;
+	padding: 12px 24px;
+	border-radius: 30px;
+	border: none;
+	font-weight: 600;
+	text-transform: capitalize;
+	letter-spacing: 1px;
+	transition: var(--transition);
+}
+
+.btn:hover,
+.btn--round:hover {
+	background-color: var(--secondary-color);
+	transform: translateY(-3px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn--round {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+	background-color: var(--primary-color);
+	color: white;
+	border-radius: 50%;
+	transition: var(--transition);
+	border: none;
+	cursor: pointer;
+	font-size: 1.25rem;
+}
+
+.decorator {
+	display: block;
+	width: 40px;
+	height: 10px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	background-color: var(--primary-color);
+}
+
+/* =============================================================== */
+/* 3. HEADER - nagłówek strony i nawigacja                         */
+/* =============================================================== */
+header {
+	background-color: white;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	position: fixed;
+	width: 100%;
+	top: 0;
+	z-index: 1000;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 5%;
+	transition: all 0.3s ease;
+}
+
+header.sticky {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+header h1 {
+	font-family: 'Lobster', serif;
+	font-weight: 400;
+	font-style: normal;
+	color: var(--primary-color);
+	font-size: 32px; /* lub inny rozmiar domyślny */
+	transition: font-size 0.3s ease;
+	margin-right: 15px;
+}
+
+header.sticky h1 {
+	font-size: 24px; /* zmniejszony rozmiar podczas przewijania */
+}
+
+header .logo {
+	width: 80px;
+	height: 80px;
+	transition: all 0.3s ease;
+}
+
+header .logo .logo__image {
+	height: 80px;
+	transition: all 0.3s ease;
+}
+
+header.sticky .logo {
+	width: 60px;
+	height: 60px;
+}
+
+header.sticky .logo .logo__image {
+	height: 60px;
+}
+
+nav ul {
+	display: flex;
+}
+
+nav ul li {
+	margin-left: 30px;
+}
+
+nav ul li a {
+	font-weight: 500;
+	transition: var(--transition);
+}
+
+nav ul li a:hover {
+	color: var(--primary-color);
+}
+
+/* Stylowanie aktywnego linku w nawigacji dla scroll-spy */
+.nav-links li a.active {
+	color: var(--primary-color) !important;
+	font-weight: 600;
+	position: relative;
+}
+
+.nav-links li a.active::after {
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background-color: var(--primary-color);
+	transition: width 0.3s ease;
+}
+
+/* Hamburger Menu */
+.hamburger {
+	display: none;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 30px;
+	height: 21px;
+	cursor: pointer;
+	z-index: 1001;
+}
+
+.hamburger span {
+	display: block;
+	height: 3px;
+	width: 100%;
+	background-color: var(--primary-color);
+	border-radius: 3px;
+	transition: all 0.3s ease;
+}
+
+/* =============================================================== */
+/* 4. HERO - sekcja powitalna                                      */
+/* =============================================================== */
+.hero {
+	height: 100vh;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./../images/pagedesign/hero-bg.jpg');
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: white;
+	padding: 0 10px;
+	position: relative;
+	overflow: visible !important;
+}
+
+.hero-content {
+	margin-top: 120px;
+}
+
+.hero-content h2 {
+	font-size: 3rem;
+	margin-bottom: 50px;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+	font-size: 1.2rem;
+	margin-bottom: 40px;
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.hero-content .btn {
+	padding: 18px 64px;
+}
+
+@media (max-width: 576px) {
+	.hero-content .btn {
+		padding: 12px 32px;
+		font-size: 0.9rem;
+	}
+}
+
+/* =============================================================== */
+/* 5. SEKCJE - ogólne style sekcji                                 */
+/* =============================================================== */
+section {
+	padding: 80px 5%;
+}
+
+section h2 {
+	text-align: center;
+	font-size: 2.5rem;
+	margin-bottom: 50px;
+	color: var(--secondary-color);
+	position: relative;
+}
+
+section h2:after {
+	content: '';
+	position: absolute;
+	bottom: -25px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 80px;
+	height: 4px;
+	background: var(--primary-color);
+	border-radius: 2px;
+}
+
+/* About Section */
+.about-content {
+	display: flex;
+	align-items: center;
+	gap: 50px;
+}
+
+.about-text {
+	flex: 1;
+}
+
+.about-text p {
+	margin-bottom: 20px;
+}
+
+.about-image {
+	flex: 1;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================================================== */
+/* 6. SERVICES - sekcja usług                                      */
+/* =============================================================== */
+.services {
+	background-color: #f9f3ff;
+}
+
+.services-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+	max-width: 1200px; /* Dodajemy maksymalną szerokość kontenera */
+	margin: 0 auto; /* Centrujemy kontener */
+}
+
+@media (min-width: 992px) {
+	.services-container {
+		grid-template-columns: repeat(3, 1fr); /* Dokładnie 3 kolumny na dużych ekranach */
+	}
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+	.services-container {
+		grid-template-columns: repeat(2, 1fr); /* 2 kolumny na średnich ekranach */
+	}
+}
+
+@media (max-width: 767px) {
+	.services-container {
+		grid-template-columns: 1fr; /* 1 kolumna na małych ekranach */
+	}
+}
+
+.service-card {
+	background-color: white;
+	padding: 30px;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+	transition: var(--transition);
+}
+
+.service-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.service-card i {
+	font-size: 3rem;
+	color: var(--primary-color);
+	margin-bottom: 20px;
+}
+
+.service-card h3 {
+	margin-bottom: 15px;
+	color: var(--secondary-color);
+}
+
+/* =============================================================== */
+/* 7. PORTFOLIO - galeria realizacji                               */
+/* =============================================================== */
+.portfolio-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+@media (min-width: 992px) {
+	.portfolio-container {
+		grid-template-columns: repeat(2, 1fr); /* Zmieniono z 3 na 2 kolumny na dużych ekranach */
+	}
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+	.portfolio-container {
+		grid-template-columns: repeat(2, 1fr); /* 2 kolumny na średnich ekranach */
+	}
+}
+
+@media (max-width: 767px) {
+	.portfolio-container {
+		grid-template-columns: 1fr; /* 1 kolumna na małych ekranach */
+	}
+}
+
+.portfolio-item {
+	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+	aspect-ratio: 4/3;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.portfolio-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: var(--transition);
+}
+
+.portfolio-item:hover img {
+	filter: brightness(1.1);
+}
+
+.portfolio-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	padding: 20px;
+	text-align: center;
+}
+
+.portfolio-overlay h3 {
+	color: white;
+	margin-bottom: 10px;
+	font-size: 1.3rem;
+	font-weight: 600;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.portfolio-overlay p {
+	color: #f8f8f8;
+	font-size: 1rem;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.portfolio-item:hover .portfolio-overlay {
+	opacity: 1;
+}
+
+.portfolio-overlay h3 {
+	margin-bottom: 20px;
+}
+
+/* =============================================================== */
+/* 8. TESTIMONIALS - opinie klientów                               */
+/* =============================================================== */
+.testimonials {
+	background-color: #f9f3ff;
+	position: relative;
+	overflow: hidden;
+}
+
+.testimonials-container {
+	display: flex;
+	align-items: center;
+	max-width: 1200px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.testimonials-slider {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.testimonials-wrapper {
+	display: flex;
+	transition: transform 0.5s ease;
+}
+
+.testimonial-card {
+	flex: 0 0 calc(33.333% - 30px);
+	margin: 0 15px;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 300px;
+	transition: var(--transition);
+}
+
+.testimonial-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-content {
+	flex-grow: 1;
+	margin-bottom: 20px;
+}
+
+.testimonial-content i {
+	font-size: 2rem;
+	color: var(--primary-color);
+	margin-bottom: 15px;
+	display: block;
+}
+
+.testimonial-content p {
+	font-style: italic;
+	line-height: 1.6;
+}
+
+.testimonial-author {
+	display: flex;
+	align-items: center;
+}
+
+.testimonial-img {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 15px;
+}
+
+.testimonial-info h3 {
+	font-size: 1.1rem;
+	color: var(--secondary-color);
+	margin-bottom: 5px;
+}
+
+.testimonial-info p {
+	font-size: 0.9rem;
+	color: #777;
+	margin-bottom: 5px;
+}
+
+.testimonial-stars {
+	color: #ffd700;
+}
+
+.slider-btn {
+	background-color: var(--primary-color);
+	color: white;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: var(--transition);
+	position: absolute;
+	z-index: 10;
+	font-size: 1.25rem;
+}
+
+.slider-btn:hover {
+	background-color: var(--secondary-color);
+}
+
+.slider-prev {
+	left: -10px;
+}
+
+.slider-next {
+	right: -10px;
+}
+
+.testimonials-dots {
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+
+.dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background-color: #ccc;
+	margin: 0 5px;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.dot.active {
+	background-color: var(--primary-color);
+	transform: scale(1.2);
+}
+
+/* Media queries dla sekcji Testimonials */
+@media (max-width: 992px) {
+	.testimonial-card {
+		flex: 0 0 calc(50% - 30px);
+	}
+}
+
+@media (max-width: 768px) {
+	.testimonial-card {
+		flex: 0 0 calc(100% - 30px);
+	}
+
+	.slider-btn {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+/* =============================================================== */
+/* 9. PARTNERS - sekcja partnerów                                  */
+/* =============================================================== */
+.partners {
+	background-color: white;
+	padding-top: 60px;
+	padding-bottom: 60px;
+	overflow: hidden;
+}
+
+.partners-slider {
+	height: 150px;
+	position: relative;
+	overflow: hidden;
+	margin-top: 30px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.partners-track {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	animation: slidePartners 30s linear infinite;
+}
+
+.partner-logo {
+	flex: 0 0 250px;
+	height: 150px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.partner-logo img {
+	max-width: 100%;
+	max-height: 100%;
+	filter: grayscale(100%);
+	opacity: 0.7;
+	transition: all 0.3s ease;
+}
+
+.partner-logo:hover img {
+	filter: grayscale(0%);
+	opacity: 1;
+}
+
+@keyframes slidePartners {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%); /* Przesunięcie o połowę szerokości (bo mamy duplikat elementów) */
+	}
+}
+
+/* Zatrzymaj animację przy najechaniu kursorem */
+.partners-slider:hover .partners-track {
+	animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+	.partner-logo {
+		flex: 0 0 200px;
+		padding: 15px;
+	}
+}
+
+@media (max-width: 576px) {
+	.partner-logo {
+		flex: 0 0 150px;
+		padding: 10px;
+	}
+}
+
+/* =============================================================== */
+/* 10. CONTACT - formularz kontaktowy                              */
+/* =============================================================== */
+.contact {
+	background-color: #f0f8ff;
+}
+
+.contact-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 50px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.contact-info,
+.contact-form {
+	flex: 1;
+	min-width: 300px;
+}
+
+.contact-info h3,
+.contact-form h3 {
+	margin-bottom: 20px;
+	color: var(--secondary-color);
+}
+
+.contact-info p {
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+}
+
+.contact-info i {
+	margin-right: 20px;
+	color: var(--secondary-color);
+	font-size: 1.25rem;
+}
+
+.contact-info address {
+	display: inline;
+	font-style: normal;
+}
+
+.social-links {
+	margin-top: 50px;
+	display: flex;
+	gap: 15px;
+}
+
+.social-links a i {
+	color: white;
+	margin-right: 0;
+}
+
+.contact-form form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-family: inherit;
+}
+
+.contact-form textarea {
+	min-height: 150px;
+	resize: vertical;
+}
+
+.contact-form button {
+	width: 50%;
+	padding: 20px 0;
+}
+
+@media (max-width: 576px) {
+	.contact-form button {
+		width: 100%;
+	}
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form button {
+	font-size: 1rem;
+}
+
+/* =============================================================== */
+/* 11. FOOTER - stopka strony                                      */
+/* =============================================================== */
+footer {
+	background-color: var(--dark-color);
+	color: white;
+	text-align: center;
+	padding: 30px;
+}
+
+/* =============================================================== */
+/* 12. DODATKOWE ELEMENTY - przyciski, lightbox                    */
+/* =============================================================== */
+/* Styl przycisku Scroll to Top */
+.scroll-to-top {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
+	display: none;
+}
+
+/* Dodaj to, aby przycisk był widoczny, gdy dodana jest klasa .visible */
+.scroll-to-top.visible {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Lightbox Styles */
+.lightbox {
+	display: none;
+	position: fixed;
+	z-index: 2000;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.9);
+	overflow: hidden;
+}
+
+.lightbox.active {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	animation: fadeIn 0.3s ease;
+}
+
+.lightbox-content {
+	position: relative;
+	max-width: 90%;
+	max-height: 90%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.lightbox-image {
+	max-width: 100%;
+	max-height: 80vh;
+	object-fit: contain;
+	border-radius: 5px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-caption {
+	color: white;
+	text-align: center;
+	margin-top: 15px;
+	padding: 10px;
+	width: 100%;
+}
+
+.lightbox-title {
+	font-size: 1.5rem;
+	margin-bottom: 5px;
+}
+
+.lightbox-description {
+	font-size: 1rem;
+	opacity: 0.8;
+}
+
+.lightbox-close {
+	position: fixed; /* Zmiana z absolute na fixed, aby pozycjonować względem okna przeglądarki */
+	top: 20px; /* Zmiana z -40px na 20px od góry */
+	right: 20px; /* Dodanie prawego marginesu */
+	color: white;
+	cursor: pointer;
+	transition: var(--transition);
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent; /* Przezroczyste tło */
+	border: none;
+	border-radius: 50%; /* Zaokrąglenie do koła */
+	z-index: 2100; /* Zapewnienie, że jest nad wszystkimi elementami */
+}
+
+.lightbox-close i {
+	font-size: 28px;
+}
+
+.lightbox-close:hover {
+	background-color: var(--primary-color);
+}
+
+.lightbox-prev,
+.lightbox-next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	border: none;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	font-size: 1.5rem;
+	cursor: pointer;
+	transition: var(--transition);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.lightbox-prev {
+	left: -70px;
+}
+
+.lightbox-next {
+	right: -70px;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+	background: var(--primary-color);
+}
+
+/* Prevent scrolling when lightbox is open */
+body.lightbox-open {
+	overflow: hidden;
+}
+
+/* =============================================================== */
+/* 13. ANIMACJE - keyframes i efekty                               */
+/* =============================================================== */
+/* Fade-in Animation */
+.fade-in {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* Balloon animation keyframes */
+@keyframes float-up {
+	0% {
+		bottom: -50px;
+		opacity: 0;
+	}
+	10% {
+		opacity: 0.7;
+	}
+	90% {
+		opacity: 0.7;
+	}
+	100% {
+		bottom: 120vh;
+		opacity: 0;
+	}
+}
+
+@keyframes sway-balloon {
+	0% {
+		transform: translateX(-15px);
+	}
+	100% {
+		transform: translateX(15px);
+	}
+}
+
+@keyframes wobble-balloon {
+	0%,
+	100% {
+		transform: rotate(-2deg);
+	}
+	50% {
+		transform: rotate(2deg);
+	}
+}
+
+@keyframes string-wave {
+	0% {
+		transform: rotate(-3deg);
+	}
+	100% {
+		transform: rotate(3deg);
+	}
+}
+
+@keyframes slidePartners {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%); /* Przesunięcie o połowę szerokości (bo mamy duplikat elementów) */
+	}
+}
+
+/* Zatrzymaj animację przy najechaniu kursorem */
+.partners-slider:hover .partners-track {
+	animation-play-state: paused;
+}
+
+/* =============================================================== */
+/* 14. MEDIA QUERIES - responsywność                               */
+/* =============================================================== */
+@media (max-width: 992px) {
+	.about-content {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 768px) {
+	header {
+		padding: 15px 5%;
+		flex-direction: column;
+	}
+
+	header.sticky {
+		padding: 10px 5%; /* Zredukowane padding dla trybu sticky */
+	}
+
+	/* Nagłówek h1 zajmuje całą szerokość i jest wyśrodkowany */
+	header h1 {
+		font-size: 1.5rem;
+		margin-bottom: 10px;
+		width: 100%;
+		text-align: center;
+		margin-right: 0;
+	}
+
+	header.sticky h1 {
+		font-size: 1.2rem; /* Zmniejszona czcionka w trybie sticky */
+		margin-bottom: 5px; /* Mniejszy margines w trybie sticky */
+	}
+
+	/* Nowy kontener dla logo i hamburger menu */
+	.header-icons-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		margin-top: 5px;
+	}
+
+	header.sticky .header-icons-container {
+		margin-top: 2px; /* Mniejszy margines w trybie sticky */
+	}
+
+	/* Logo po lewej stronie */
+	header .logo {
+		width: 60px;
+		height: 60px;
+		margin-right: auto;
+		transition: all 0.3s ease;
+	}
+
+	header .logo .logo__image {
+		height: 60px;
+		transition: all 0.3s ease;
+	}
+
+	header.sticky .logo {
+		width: 40px;
+		height: 40px;
+	}
+
+	header.sticky .logo .logo__image {
+		height: 40px;
+	}
+
+	/* Hamburger po prawej stronie */
+	.hamburger {
+		display: flex;
+		margin-left: auto;
+	}
+
+	.nav-menu {
+		position: fixed;
+		top: 0;
+		right: -100%;
+		height: 100vh;
+		width: 70%;
+		background-color: white;
+		box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+		padding-top: 80px;
+		transition: right 0.3s ease;
+		z-index: 1000;
+	}
+
+	.nav-menu.active {
+		right: 0;
+	}
+
+	.nav-links {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.nav-links li {
+		margin: 15px 0;
+	}
+
+	/* Hamburger animation */
+	.hamburger.active span:nth-child(1) {
+		transform: translateY(9px) rotate(45deg);
+	}
+
+	.hamburger.active span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.hamburger.active span:nth-child(3) {
+		transform: translateY(-9px) rotate(-45deg);
+	}
+
+	.hero-content h2 {
+		font-size: 2.2rem;
+	}
+
+	section {
+		padding: 60px 5%;
+	}
+
+	section h2 {
+		font-size: 2rem;
+		margin-bottom: 40px;
+	}
+
+	.lightbox-prev,
+	.lightbox-next {
+		width: 40px;
+		height: 40px;
+		font-size: 1.2rem;
+	}
+
+	.lightbox-prev {
+		left: 10px;
+	}
+
+	.lightbox-next {
+		right: 10px;
+	}
+
+	.lightbox-title {
+		font-size: 1.2rem;
+	}
+
+	.lightbox-description {
+		font-size: 0.9rem;
+	}
+
+	.partner-logo {
+		flex: 0 0 200px;
+		padding: 15px;
+	}
+}
+
+@media (max-width: 576px) {
+	.header-icons-container {
+		padding: 0 10px;
+	}
+
+	header h1 {
+		font-size: 1.3rem;
+	}
+
+	header.sticky h1 {
+		font-size: 1.1rem; /* Jeszcze mniejsza czcionka dla bardzo małych ekranów */
+	}
+
+	header .logo {
+		width: 50px;
+		height: 50px;
+	}
+
+	header .logo .logo__image {
+		height: 50px;
+	}
+
+	header.sticky .logo {
+		width: 35px;
+		height: 35px;
+	}
+
+	header.sticky .logo .logo__image {
+		height: 35px;
+	}
+
+	.nav-menu {
+		width: 80%;
+	}
+
+	.hero-content h2 {
+		font-size: 1.8rem;
+	}
+
+	.service-card,
+	.portfolio-item,
+	.contact-container {
+		margin-bottom: 20px;
+	}
+
+	.partner-logo {
+		flex: 0 0 150px;
+		padding: 10px;
+	}
+}
