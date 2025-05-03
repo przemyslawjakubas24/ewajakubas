@@ -901,7 +901,7 @@ footer {
 
 .lightbox-prev,
 .lightbox-next {
-	position: absolute;
+	position: fixed; /* Zmiana z absolute na fixed, aby przyciski były pozycjonowane względem okna przeglądarki */
 	top: 50%;
 	transform: translateY(-50%);
 	background: rgba(0, 0, 0, 0.5);
@@ -916,14 +916,15 @@ footer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 2100; /* Zapewnienie, że przyciski są nad pozostałymi elementami */
 }
 
 .lightbox-prev {
-	left: -70px;
+	left: 20px; /* Zmiana z -70px na 20px od lewej krawędzi */
 }
 
 .lightbox-next {
-	right: -70px;
+	right: 20px; /* Zmiana z -70px na 20px od prawej krawędzi */
 }
 
 .lightbox-prev:hover,
