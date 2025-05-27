@@ -732,7 +732,7 @@ section h2:after {
 	align-items: center;
 }
 
-.contact-info i {
+.contact-info i, .social-links a i {
 	margin-right: 20px;
 	color: var(--secondary-color);
 	font-size: 1.25rem;
@@ -741,22 +741,6 @@ section h2:after {
 .contact-info address {
 	display: inline;
 	font-style: normal;
-}
-
-.social-links {
-	margin-top: 50px;
-	display: flex;
-	gap: 15px;
-}
-
-.social-links a {
-	border-radius: 25px;
-	width: 140px;
-}
-
-.social-links a i {
-	color: white;
-	margin-right: 0;
 }
 
 .contact-form form {
