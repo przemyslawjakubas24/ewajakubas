@@ -373,6 +373,7 @@ section h2:after {
 /* =============================================================== */
 /* 7. PORTFOLIO - galeria realizacji                               */
 /* =============================================================== */
+
 .portfolio-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -748,6 +749,11 @@ section h2:after {
 	gap: 15px;
 }
 
+.social-links a {
+	border-radius: 25px;
+	width: 140px;
+}
+
 .social-links a i {
 	color: white;
 	margin-right: 0;
@@ -797,6 +803,10 @@ footer {
 	color: white;
 	text-align: center;
 	padding: 30px;
+}
+
+footer br {
+	display: none;
 }
 
 /* =============================================================== */
@@ -1224,5 +1234,9 @@ body.lightbox-open {
 	.partner-logo {
 		flex: 0 0 150px;
 		padding: 10px;
+	}
+
+	footer br {
+		display: inline;
 	}
 }
