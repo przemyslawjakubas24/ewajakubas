@@ -770,12 +770,12 @@ section h2:after {
 .social-links a .material-icons {
 	margin-right: 20px;
 	color: var(--secondary-color);
-	font-size: 1.25rem;
+	font-size: 1.75rem;
 	vertical-align: middle;
 }
 
 .contact-info address {
-	display: inline;
+	display: flex;
 	font-style: normal;
 }
 
