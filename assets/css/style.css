@@ -596,7 +596,7 @@ section h2:after {
 
 /* Style dla ikon przycisków przewijania */
 .slider-btn .material-icons {
-	font-size: 1.25rem;
+	font-size: 2.25rem;
 }
 
 .slider-prev {
@@ -841,6 +841,10 @@ footer br {
 	display: none;
 }
 
+.scroll-to-top .material-icons {
+	font-size: 1.75rem;
+}
+
 /* Dodaj to, aby przycisk był widoczny, gdy dodana jest klasa .visible */
 .scroll-to-top.visible {
 	display: flex;
@@ -910,8 +914,8 @@ footer br {
 	color: white;
 	cursor: pointer;
 	transition: var(--transition);
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -953,7 +957,7 @@ footer br {
 /* Style dla ikon przycisków lightbox */
 .lightbox-prev .material-icons,
 .lightbox-next .material-icons {
-	font-size: 1.5rem;
+	font-size: 2.25rem;
 }
 
 .lightbox-prev {
