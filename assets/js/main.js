@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	/* =============================================================== */
 
 	// Interaktywna galeria portfolio
-	const portfolioItems = document.querySelectorAll('.portfolio-item')
+	const portfolioItems = document.querySelectorAll('.portfolio-container .portfolio-item')
 	const hiddenPortfolioItems = document.querySelectorAll('.hidden-portfolio-items .portfolio-item')
 	const portfolioData = []
 
@@ -294,7 +294,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				alt: img.alt,
 				title: title,
 				description: description,
-				index: index,
 			})
 
 			// Dodaj obsługę kliknięcia
@@ -316,7 +315,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				alt: img.alt,
 				title: title,
 				description: description,
-				index: portfolioItems.length + hiddenIndex,
 			})
 		})
 	}
