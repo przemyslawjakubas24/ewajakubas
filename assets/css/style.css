@@ -389,6 +389,11 @@ section h2:after {
 	margin: 0 auto;
 }
 
+/* Dodany nowy styl dla ukrytego kontenera z projektami */
+.hidden-portfolio-items {
+	display: none;
+}
+
 @media (min-width: 992px) {
 	.portfolio-container {
 		grid-template-columns: repeat(2, 1fr); /* Zmieniono z 3 na 2 kolumny na dużych ekranach */

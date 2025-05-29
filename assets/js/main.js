@@ -264,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// Interaktywna galeria portfolio
 	const portfolioItems = document.querySelectorAll('.portfolio-item')
+	const hiddenPortfolioItems = document.querySelectorAll('.hidden-portfolio-items .portfolio-item')
 	const portfolioData = []
 
 	// Elementy lightboxa
@@ -277,26 +278,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	let currentIndex = 0
 
-	// Zbierz dane o wszystkich elementach portfolio
-	portfolioItems.forEach((item, index) => {
-		const img = item.querySelector('img')
-		const overlay = item.querySelector('.portfolio-overlay')
-		const title = overlay.querySelector('h3')?.textContent || img.alt
-		const description = overlay.querySelector('p')?.textContent || ''
+	// Zbierz dane o wszystkich elementach portfolio (widocznych i ukrytych)
+	function collectPortfolioData() {
+		portfolioData.length = 0 // Wyczyszczenie tablicy
 
-		portfolioData.push({
-			src: img.src,
-			alt: img.alt,
-			title: title,
-			description: description,
-			index: index,
+		// Dodaj widoczne elementy
+		portfolioItems.forEach((item, index) => {
+			const img = item.querySelector('img')
+			const overlay = item.querySelector('.portfolio-overlay')
+			const title = overlay.querySelector('h3')?.textContent || img.alt
+			const description = overlay.querySelector('p')?.textContent || ''
+
+			portfolioData.push({
+				src: img.src,
+				alt: img.alt,
+				title: title,
+				description: description,
+				index: index,
+			})
+
+			// Dodaj obsługę kliknięcia
+			item.addEventListener('click', function () {
+				openLightbox(index)
+			})
 		})
 
-		// Dodaj obsługę kliknięcia
-		item.addEventListener('click', function () {
-			openLightbox(index)
+		// Dodaj ukryte elementy
+		hiddenPortfolioItems.forEach((item, hiddenIndex) => {
+			const img = item.querySelector('img')
+			const overlay = item.querySelector('.portfolio-overlay')
+			const title = overlay.querySelector('h3')?.textContent || img.alt
+			const description = overlay.querySelector('p')?.textContent || ''
+
+			// Dodaj do tablicy z indeksem po widocznych elementach
+			portfolioData.push({
+				src: img.src,
+				alt: img.alt,
+				title: title,
+				description: description,
+				index: portfolioItems.length + hiddenIndex,
+			})
 		})
-	})
+	}
+
+	// Wywołaj funkcję zbierającą dane podczas inicjalizacji
+	collectPortfolioData()
 
 	// Funkcja otwierająca lightbox
 	function openLightbox(index) {
