@@ -466,29 +466,25 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 
 			// Tutaj byłoby wysłanie formularza - przykład z użyciem fetch
-			// fetch('https://example.com/submit-form', {
-			//   method: 'POST',
-			//   headers: {
-			//     'Content-Type': 'application/json',
-			//   },
-			//   body: JSON.stringify(formDataObj),
-			// })
-			// .then(response => response.json())
-			// .then(data => {
-			//   console.log('Success:', data);
-			//   // Pokazanie komunikatu sukcesu
-			//   this.reset();
-			//   alert('Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.');
-			// })
-			// .catch((error) => {
-			//   console.error('Error:', error);
-			//   alert('Wystąpił błąd podczas wysyłania formularza. Prosimy spróbować później.');
-			// });
+			fetch('process-form.php', {
+				method: 'POST',
+				body: new FormData(this),
+			})
+				.then(response => response.json())
+				.then(data => {
+					console.log('Success:', data)
+					this.reset()
+					alert('Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.')
+				})
+				.catch(error => {
+					console.error('Error:', error)
+					alert('Wystąpił błąd podczas wysyłania formularza. Prosimy spróbować później.')
+				})
 
 			// Tymczasowo symulujemy sukces
-			console.log('Form data:', formDataObj)
-			this.reset()
-			alert('Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.')
+			// console.log('Form data:', formDataObj)
+			// this.reset()
+			// alert('Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.')
 		})
 	}
 
