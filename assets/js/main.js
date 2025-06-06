@@ -470,7 +470,14 @@ document.addEventListener('DOMContentLoaded', function () {
 				method: 'POST',
 				body: new FormData(this),
 			})
-				.then(response => response.json())
+				.then(response => {
+					if (!response.ok) {
+						return response.json().then(err => {
+							throw new Error(err.message || 'Wystąpił błąd podczas wysyłania wiadomości')
+						})
+					}
+					return response.json()
+				})
 				.then(data => {
 					console.log('Success:', data)
 					this.reset()
@@ -478,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				})
 				.catch(error => {
 					console.error('Error:', error)
-					alert('Wystąpił błąd podczas wysyłania formularza. Prosimy spróbować później.')
+					alert(`Wystąpił błąd podczas wysyłania formularza: ${error.message}`)
 				})
 
 			// Tymczasowo symulujemy sukces
