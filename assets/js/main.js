@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 
 			// Tutaj byłoby wysłanie formularza - przykład z użyciem fetch
-			fetch('process-form.php', {
+			fetch('send.php', {
 				method: 'POST',
 				body: new FormData(this),
 			})
