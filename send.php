@@ -47,7 +47,7 @@ try {
     $mail->addReplyTo($email, $name);                                 // Adres zwrotny (adres osoby wypełniającej)
 
     // Treść
-    $mail->isHTML(false);                                    // Format wiadomości jako tekst (false = tekst, true = HTML)
+    $mail->isHTML(false);             // Format wiadomości jako tekst (false = tekst, true = HTML)
     $mail->Subject = 'Nowa wiadomość ze strony testystrony.pl';
     $mail->Body    = $email_content;
 
