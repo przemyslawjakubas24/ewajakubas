@@ -1,14 +1,16 @@
 <?php
-// Importuj klasy PHPMailer do globalnej przestrzeni nazw
-// Te deklaracje muszą znajdować się na początku skryptu, nie wewnątrz funkcji
+// Importuj klasy PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// Ścieżka do biblioteki PHPMailer (zmień ścieżkę jeśli jest inna)
-require 'PHPMailer-master/src/Exception.php';
-require 'PHPMailer-master/src/PHPMailer.php';
-require 'PHPMailer-master/src/SMTP.php';
+// Ścieżka do biblioteki PHPMailer (zaktualizowana)
+require_once __DIR__ . '/PHPMailer/src/Exception.php';
+require_once __DIR__ . '/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/PHPMailer/src/SMTP.php';
+
+// Załaduj konfigurację
+$config = include __DIR__ . '/config.php';
 
 // Odbierz dane z formularza
 $name = $_POST['name'] ?? '';
@@ -26,28 +28,28 @@ $email_content .= "Rodzaj wydarzenia: $event\n";
 $email_content .= "Data wydarzenia: $date\n\n";
 $email_content .= "Wiadomość:\n$message\n";
 
-// Utwórz instancję; przekazanie `true` włącza wyjątki
+// Utwórz instancję
 $mail = new PHPMailer(true);
 
 try {
     // Ustawienia serwera
     $mail->SMTPDebug = 0;
     $mail->isSMTP();
-    $mail->Host       = 'h58.seohost.pl';
+    $mail->Host       = $config['smtp_host'];
     $mail->SMTPAuth   = true;    
-    $mail->Username   = 'form@testystrony.pl';           
-    $mail->Password   = 'Tmobile1';                   
+    $mail->Username   = $config['smtp_username'];         
+    $mail->Password   = $config['smtp_password'];                 
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port       = 465;                               
+    $mail->Port       = $config['smtp_port'];                            
     $mail->CharSet    = 'UTF-8';
 
     // Odbiorcy
-    $mail->setFrom('form@testystrony.pl', 'Formularz kontaktowy');  // Od kogo (adres formularza)
-    $mail->addAddress('kontakt@testystrony.pl');                       // Dodaj odbiorcę (zmień na swój)
-    $mail->addReplyTo($email, $name);                                 // Adres zwrotny (adres osoby wypełniającej)
+    $mail->setFrom($config['email_from'], 'Formularz kontaktowy');
+    $mail->addAddress($config['email_to']);
+    $mail->addReplyTo($email, $name);
 
     // Treść
-    $mail->isHTML(false);             // Format wiadomości jako tekst (false = tekst, true = HTML)
+    $mail->isHTML(false);
     $mail->Subject = 'Nowa wiadomość ze strony testystrony.pl';
     $mail->Body    = $email_content;
 
