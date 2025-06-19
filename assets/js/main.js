@@ -411,64 +411,104 @@ document.addEventListener('DOMContentLoaded', function () {
 	/* =============================================================== */
 
 	// Obsługa formularza kontaktowego
-	const contactForm = document.querySelector('.contact-form form')
+	const contactForm = document.querySelector('#contactForm')
 
 	if (contactForm) {
+		// Referencje do elementów formularza
+		const nameInput = contactForm.querySelector('#name')
+		const emailInput = contactForm.querySelector('#email')
+		const phoneInput = contactForm.querySelector('#phone')
+		const eventInput = contactForm.querySelector('#event')
+		const dateInput = contactForm.querySelector('#date')
+		const messageInput = contactForm.querySelector('#message')
+		const privacyCheckbox = contactForm.querySelector('#privacy-policy')
+		const submitButton = contactForm.querySelector('#submitBtn')
+		const formStatus = contactForm.querySelector('.form-status')
+
+		// Ustawienie minimalnej daty na dziś
+		const today = new Date().toISOString().split('T')[0]
+		dateInput.setAttribute('min', today)
+
+		// Walidacja formularza
 		contactForm.addEventListener('submit', function (e) {
 			e.preventDefault()
 
-			// Create FormData object
-			const formData = new FormData(this)
-			const formDataObj = {}
+			// Reset statusów
+			resetFormStatus()
 
-			// Convert FormData to object
-			for (let [key, value] of formData.entries()) {
-				formDataObj[key] = value
+			// Sprawdzenie walidacji
+			let isValid = validateForm()
+
+			if (isValid) {
+				// Pokazanie stanu ładowania
+				submitButton.classList.add('loading')
+				submitButton.disabled = true
+
+				// Wysłanie formularza przez AJAX
+				sendFormData()
 			}
+		})
 
-			// Walidacja danych
+		// Funkcja walidująca formularz
+		function validateForm() {
 			let isValid = true
-			const nameInput = this.querySelector('input[name="name"]')
-			const emailInput = this.querySelector('input[name="email"]')
-			const messageInput = this.querySelector('textarea[name="message"]')
 
-			// Prosta walidacja email
-			function validateEmail(email) {
-				const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-				return re.test(String(email).toLowerCase())
-			}
-
+			// Walidacja imienia
 			if (nameInput.value.trim() === '') {
+				showError(nameInput, 'nameError', 'Proszę podać imię')
 				isValid = false
-				nameInput.classList.add('error')
 			} else {
-				nameInput.classList.remove('error')
+				showSuccess(nameInput)
 			}
 
-			if (!validateEmail(emailInput.value)) {
+			// Walidacja email
+			if (emailInput.value.trim() === '') {
+				showError(emailInput, 'emailError', 'Proszę podać adres email')
 				isValid = false
-				emailInput.classList.add('error')
+			} else if (!isValidEmail(emailInput.value.trim())) {
+				showError(emailInput, 'emailError', 'Proszę podać poprawny adres email')
+				isValid = false
 			} else {
-				emailInput.classList.remove('error')
+				showSuccess(emailInput)
 			}
 
+			// Walidacja telefonu (opcjonalna)
+			if (phoneInput.value.trim() !== '' && !isValidPhone(phoneInput.value.trim())) {
+				showError(phoneInput, 'phoneError', 'Proszę podać poprawny numer telefonu')
+				isValid = false
+			} else if (phoneInput.value.trim() !== '') {
+				showSuccess(phoneInput)
+			}
+
+			// Walidacja wiadomości
 			if (messageInput.value.trim() === '') {
+				showError(messageInput, 'messageError', 'Proszę wpisać wiadomość')
 				isValid = false
-				messageInput.classList.add('error')
+			} else if (messageInput.value.trim().length < 10) {
+				showError(messageInput, 'messageError', 'Wiadomość jest zbyt krótka (min. 10 znaków)')
+				isValid = false
 			} else {
-				messageInput.classList.remove('error')
+				showSuccess(messageInput)
 			}
 
-			if (!isValid) {
-				// Pokaż komunikat o błędzie
-				alert('Proszę wypełnić poprawnie wszystkie wymagane pola formularza.')
-				return
+			// Walidacja zgody na przetwarzanie danych
+			if (!privacyCheckbox.checked) {
+				showError(privacyCheckbox, 'privacyError', 'Wymagana jest zgoda na przetwarzanie danych')
+				isValid = false
+			} else {
+				clearError('privacyError')
 			}
 
-			// Tutaj byłoby wysłanie formularza - przykład z użyciem fetch
+			return isValid
+		}
+
+		// Funkcja wysyłająca dane formularza
+		function sendFormData() {
+			const formData = new FormData(contactForm)
+
 			fetch('send.php', {
 				method: 'POST',
-				body: new FormData(this),
+				body: formData,
 			})
 				.then(response => {
 					if (!response.ok) {
@@ -479,19 +519,88 @@ document.addEventListener('DOMContentLoaded', function () {
 					return response.json()
 				})
 				.then(data => {
-					console.log('Success:', data)
-					this.reset()
-					alert('Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.')
+					// Sukces
+					submitButton.classList.remove('loading')
+					submitButton.disabled = false
+
+					// Pokazanie komunikatu sukcesu
+					formStatus.textContent = 'Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.'
+					formStatus.classList.add('success')
+
+					// Reset formularza
+					contactForm.reset()
+
+					// Przewinięcie do komunikatu
+					formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' })
 				})
 				.catch(error => {
-					console.error('Error:', error)
-					alert(`Wystąpił błąd podczas wysyłania formularza: ${error.message}`)
-				})
+					// Błąd
+					submitButton.classList.remove('loading')
+					submitButton.disabled = false
 
-			// Tymczasowo symulujemy sukces
-			// console.log('Form data:', formDataObj)
-			// this.reset()
-			// alert('Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.')
+					// Pokazanie komunikatu błędu
+					formStatus.textContent = `Wystąpił błąd: ${error.message}`
+					formStatus.classList.add('error')
+
+					// Przewinięcie do komunikatu
+					formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' })
+				})
+		}
+
+		// Funkcje pomocnicze
+		function resetFormStatus() {
+			document.querySelectorAll('.error-message').forEach(el => (el.textContent = ''))
+			document.querySelectorAll('.form-group').forEach(el => {
+				el.classList.remove('error')
+				el.classList.remove('success')
+			})
+			formStatus.textContent = ''
+			formStatus.classList.remove('success', 'error')
+			formStatus.style.display = 'none'
+		}
+
+		function showError(input, errorId, message) {
+			const errorElement = document.getElementById(errorId)
+			errorElement.textContent = message
+			input.closest('.form-group').classList.add('error')
+			input.closest('.form-group').classList.remove('success')
+		}
+
+		function showSuccess(input) {
+			input.closest('.form-group').classList.remove('error')
+			input.closest('.form-group').classList.add('success')
+		}
+
+		function clearError(errorId) {
+			const errorElement = document.getElementById(errorId)
+			if (errorElement) errorElement.textContent = ''
+		}
+
+		function isValidEmail(email) {
+			const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+			return re.test(String(email).toLowerCase())
+		}
+
+		function isValidPhone(phone) {
+			// Akceptuje numery w formatach: +48123456789, 123-456-789, 123 456 789
+			const re = /^(\+\d{1,3}\s?)?\d{3}(\s|-|)?\d{3}(\s|-|)?\d{3}$/
+			return re.test(phone)
+		}
+
+		// Nasłuchiwanie zmiany wartości pól w celu aktualizacji stanu walidacji
+		contactForm.querySelectorAll('input, textarea, select').forEach(input => {
+			input.addEventListener('input', function () {
+				if (this.value.trim() !== '') {
+					if (this.id === 'email' && !isValidEmail(this.value.trim())) {
+						showError(this, 'emailError', 'Proszę podać poprawny adres email')
+					} else if (this.id === 'phone' && !isValidPhone(this.value.trim())) {
+						showError(this, 'phoneError', 'Proszę podać poprawny numer telefonu')
+					} else {
+						showSuccess(this)
+						clearError(`${this.id}Error`)
+					}
+				}
+			})
 		})
 	}
 

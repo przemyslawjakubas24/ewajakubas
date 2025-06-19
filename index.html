@@ -507,17 +507,71 @@
                     </a>
                 </div>
             </div>
+            <!-- Ulepszony formularz kontaktowy -->
             <div class="contact-form">
                 <h3>Wyślij zapytanie</h3>
-                <form action="send.php" method="POST">
-                    <input type="text" name="name" placeholder="Imię" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="text" name="phone" placeholder="Telefon">
-                    <input type="text" name="event" placeholder="Rodzaj wydarzenia">
-                    <input type="text" name="date" class="date-input" placeholder="Data wydarzenia"
-                        onfocus="this.type='date'">
-                    <textarea name="message" placeholder="Twoja wiadomość" required></textarea>
-                    <button type="submit" class="btn">Wyślij wiadomość</button>
+                <form id="contactForm" action="send.php" method="POST" novalidate>
+                    <div class="form-group">
+                        <label for="name">Imię <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required aria-required="true">
+                        <div class="error-message" id="nameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required aria-required="true">
+                        <div class="error-message" id="emailError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefon</label>
+                        <input type="tel" id="phone" name="phone" pattern="[0-9+\s-]{9,15}"
+                            placeholder="np. 123-456-789">
+                        <div class="error-message" id="phoneError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event">Rodzaj wydarzenia</label>
+                        <select id="event" name="event">
+                            <option value="">-- Wybierz rodzaj --</option>
+                            <option value="urodziny">Urodziny</option>
+                            <option value="chrzest">Chrzest</option>
+                            <option value="komunia">Komunia</option>
+                            <option value="wesele">Wesele</option>
+                            <option value="impreza-firmowa">Impreza firmowa</option>
+                            <option value="inne">Inne</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Data wydarzenia</label>
+                        <input type="date" id="date" name="date" min="2025-06-19">
+                        <div class="error-message" id="dateError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Twoja wiadomość <span class="required">*</span></label>
+                        <textarea id="message" name="message" required aria-required="true"></textarea>
+                        <div class="error-message" id="messageError"></div>
+                    </div>
+
+                    <!-- Pole pułapka na boty -->
+                    <div class="honey-pot">
+                        <label for="website" class="visually-hidden">Zostaw to pole puste</label>
+                        <input type="text" name="website" id="website" tabindex="-1" title="Zostaw to pole puste" placeholder="Nie wypełniaj tego pola">
+                    </div>
+
+                    <div class="form-group consent">
+                        <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
+                        <label for="privacy-policy">Wyrażam zgodę na przetwarzanie moich danych osobowych w celu
+                            odpowiedzi na zapytanie <span class="required">*</span></label>
+                        <div class="error-message" id="privacyError"></div>
+                    </div>
+
+                    <div class="form-submit">
+                        <button type="submit" class="btn" id="submitBtn">Wyślij wiadomość</button>
+                        <div class="form-status"></div>
+                    </div>
                 </form>
             </div>
         </div>
