@@ -443,9 +443,81 @@ document.addEventListener('DOMContentLoaded', function () {
 				// Pokazanie stanu ładowania
 				submitButton.classList.add('loading')
 				submitButton.disabled = true
+				submitButton.textContent = 'Wysyłanie...'
 
-				// Wysłanie formularza przez AJAX
-				sendFormData()
+				// Wysłanie formularza przez fetch API
+				const formData = new FormData(contactForm)
+
+				fetch('process.php', {
+					method: 'POST',
+					body: formData,
+				})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Wystąpił problem z połączeniem')
+						}
+						return response.json() // Zmiana z text() na json()
+					})
+					.then(data => {
+						// Obsługa odpowiedzi JSON
+						if (data.success) {
+							// Sukces - zmień tekst przycisku
+							submitButton.classList.remove('loading')
+							submitButton.classList.add('success')
+							submitButton.textContent = 'Wiadomość wysłana!'
+
+							// Reset formularza
+							contactForm.reset()
+
+							// Po 3 sekundach przywróć oryginalny tekst przycisku
+							setTimeout(() => {
+								submitButton.classList.remove('success')
+								submitButton.disabled = false
+								submitButton.textContent = 'Wyślij wiadomość'
+							}, 3000)
+						} else {
+							// Błędy walidacji po stronie serwera
+							submitButton.classList.remove('loading')
+							submitButton.classList.add('error')
+							submitButton.textContent = 'Błąd wysyłania!'
+
+							// Pokaż błędy
+							if (data.errors && data.errors.length) {
+								formStatus.innerHTML = '<ul>' + data.errors.map(error => `<li>${error}</li>`).join('') + '</ul>'
+								formStatus.classList.add('error')
+								formStatus.style.display = 'block'
+							} else {
+								formStatus.textContent = data.message || 'Wystąpił nieoczekiwany błąd'
+								formStatus.classList.add('error')
+								formStatus.style.display = 'block'
+							}
+
+							// Po 3 sekundach przywróć oryginalny tekst przycisku
+							setTimeout(() => {
+								submitButton.classList.remove('error')
+								submitButton.disabled = false
+								submitButton.textContent = 'Wyślij wiadomość'
+							}, 3000)
+						}
+					})
+					.catch(error => {
+						// Błąd połączenia
+						submitButton.classList.remove('loading')
+						submitButton.classList.add('error')
+						submitButton.textContent = 'Błąd wysyłania!'
+
+						// Pokaż szczegóły błędu
+						formStatus.textContent = `Wystąpił błąd: ${error.message}`
+						formStatus.classList.add('error')
+						formStatus.style.display = 'block'
+
+						// Po 3 sekundach przywróć oryginalny tekst przycisku
+						setTimeout(() => {
+							submitButton.classList.remove('error')
+							submitButton.disabled = false
+							submitButton.textContent = 'Wyślij wiadomość'
+						}, 3000)
+					})
 			}
 		})
 
@@ -500,51 +572,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 
 			return isValid
-		}
-
-		// Funkcja wysyłająca dane formularza
-		function sendFormData() {
-			const formData = new FormData(contactForm)
-
-			fetch('send.php', {
-				method: 'POST',
-				body: formData,
-			})
-				.then(response => {
-					if (!response.ok) {
-						return response.json().then(err => {
-							throw new Error(err.message || 'Wystąpił błąd podczas wysyłania wiadomości')
-						})
-					}
-					return response.json()
-				})
-				.then(data => {
-					// Sukces
-					submitButton.classList.remove('loading')
-					submitButton.disabled = false
-
-					// Pokazanie komunikatu sukcesu
-					formStatus.textContent = 'Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.'
-					formStatus.classList.add('success')
-
-					// Reset formularza
-					contactForm.reset()
-
-					// Przewinięcie do komunikatu
-					formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' })
-				})
-				.catch(error => {
-					// Błąd
-					submitButton.classList.remove('loading')
-					submitButton.disabled = false
-
-					// Pokazanie komunikatu błędu
-					formStatus.textContent = `Wystąpił błąd: ${error.message}`
-					formStatus.classList.add('error')
-
-					// Przewinięcie do komunikatu
-					formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' })
-				})
 		}
 
 		// Funkcje pomocnicze

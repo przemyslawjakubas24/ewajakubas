@@ -929,6 +929,7 @@ section h2:after {
 	opacity: 0.7;
 	pointer-events: none;
 	position: relative;
+	background-color: #ccc;
 }
 
 .btn.loading::after {
@@ -942,6 +943,18 @@ section h2:after {
 	right: 15px;
 	top: calc(50% - 10px);
 	animation: spin 1s linear infinite;
+}
+
+/* Styl dla przycisku po pomyślnym wysłaniu */
+.btn.success {
+	background-color: #2ecc71;
+	pointer-events: none;
+}
+
+/* Styl dla przycisku po błędzie */
+.btn.error {
+	background-color: #e74c3c;
+	pointer-events: none;
 }
 
 @keyframes spin {
