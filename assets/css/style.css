@@ -22,7 +22,8 @@
 /* 1. ZMIENNE I RESET - kolory, podstawowe style i reset           */
 /* =============================================================== */
 :root {
-	--primary-color: #1fe0e0;
+	/* --primary-color: #1fe0e0; */
+	--primary-color: #00cae2;
 	--secondary-color: #ff883e;
 	--accent-color: #00bfff;
 	--light-color: #f8f9fa;
@@ -118,7 +119,7 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px 5%;
+	padding: 5px 5%;
 	transition: all 0.3s ease;
 }
 
@@ -142,13 +143,13 @@ header.sticky h1 {
 }
 
 header .logo {
-	width: 80px;
-	height: 80px;
+	width: 100px;
+	height: 100px;
 	transition: all 0.3s ease;
 }
 
 header .logo .logo__image {
-	height: 80px;
+	height: 100px;
 	transition: all 0.3s ease;
 }
 
